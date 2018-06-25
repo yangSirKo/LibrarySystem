@@ -1,0 +1,27 @@
+/**
+ * 
+ */
+package com.atyang.librarySystem.Biz.impl;
+
+import org.springframework.stereotype.Controller;
+import static com.atyang.librarySystem.Biz.BaseFinal.*;
+
+import com.atyang.librarySystem.Biz.ManagerBiz;
+
+/**
+ * @作者 杨金鹏
+ * @创建时间：2017-6-20
+ * @创建内容：
+ */
+@Controller("mgrBiz")
+public class ManagerBizImpl extends BaseBizImpl implements ManagerBiz{
+
+	@Override
+	public int loginMgr(int mgrNo, String password) {
+		if(mgrDao.get(mgrNo, password) != null){
+			return LOGIN_MGR;    //登录成功
+		}
+		return LOGIN_FAIL;    //登录失败
+	}
+
+}

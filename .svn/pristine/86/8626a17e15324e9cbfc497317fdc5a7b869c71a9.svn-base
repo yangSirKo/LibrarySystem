@@ -1,0 +1,7 @@
+package com.atyang.librarySystem.dao;
+
+import com.atyang.librarySystem.pojo.Record;
+
+public interface RecordDAO extends BaseDAO<Record>{
+	
+}

@@ -1,0 +1,69 @@
+/**
+ * 
+ */
+package com.atyang.librarySystem.Biz.impl;
+import static com.atyang.librarySystem.Biz.BaseFinal.*;
+import org.springframework.stereotype.Service;
+
+import com.atyang.librarySystem.Biz.StudentBiz;
+import com.atyang.librarySystem.pojo.RecordId;
+import com.atyang.librarySystem.pojo.ReturnId;
+
+/**
+ * @作者 杨金鹏
+ * @创建时间：2017-6-20
+ * @创建内容：
+ */
+@Service("stuBiz")
+public class StudentBizImpl extends BaseBizImpl implements StudentBiz {
+
+	@Override
+	public int loginStu(String stuName) {
+		if(stuDao.getStuName(stuName) != null){
+			return LOGIN_STU;
+		}
+		return LOGIN_FAIL;
+	}
+
+	@Override
+	public void applyRecord(RecordId recordId,Integer bookNo) {
+		//像借阅表插入一条借阅记录
+			recordDao.add(recordId);
+		//修改Book表中该本书的是否可借状态
+		String state = "借书待审核";
+		try {
+			bookDao.updateBookState(state, bookNo);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void applyRecord2(RecordId recordId) {
+		//像借阅表插入一条借阅记录
+			recordDao.add(recordId);
+		//修改Book表中该本书的是否可借状态
+		String state = "借书待审核";
+		try {
+			bookDao.updateBookState2(state, recordId);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 学生申请还书
+	 * @param returnId
+	 */
+	@Override
+	public void returnBook(ReturnId returnId, Integer bookNo) {
+		//像还书表插入一条还书记录
+		returnDao.add(returnId);
+		//修改Book表中该本书的是否可借状态
+		String state = "还书待审核";
+		bookDao.updateBookState(state, bookNo);
+	}
+
+}

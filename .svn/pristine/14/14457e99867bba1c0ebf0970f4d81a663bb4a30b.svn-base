@@ -1,0 +1,7 @@
+package com.atyang.librarySystem.dao;
+
+import com.atyang.librarySystem.pojo.Return;
+
+public interface ReturnDAO extends BaseDAO<Return>{
+	
+}

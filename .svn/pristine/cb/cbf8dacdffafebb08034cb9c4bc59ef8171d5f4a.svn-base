@@ -1,0 +1,21 @@
+/**
+ * 
+ */
+package com.atyang.librarySystem.action;
+
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Controller;
+
+/**
+ * @作者 杨金鹏
+ * @创建时间：2017-6-21
+ * @创建内容：
+ */
+@Scope("prototype")
+@Controller("studentAction")
+public class StudentAction extends BaseAction{
+
+	private static final long serialVersionUID = 1L;
+
+	
+}

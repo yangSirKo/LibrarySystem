@@ -1,0 +1,23 @@
+/**
+ * 
+ */
+package com.atyang.librarySystem.Biz.impl;
+import static com.atyang.librarySystem.Biz.BaseFinal.*;
+import com.atyang.librarySystem.Biz.StudentBiz;
+
+/**
+ * @作者 杨金鹏
+ * @创建时间：2017-6-20
+ * @创建内容：
+ */
+public class StudentBizImpl extends BaseBizImpl implements StudentBiz {
+
+	@Override
+	public int loginStu(String stuName) {
+		if(stuDao.getStuName(stuName) != null){
+			return LOGIN_STU;
+		}
+		return LOGIN_FAIL;
+	}
+
+}

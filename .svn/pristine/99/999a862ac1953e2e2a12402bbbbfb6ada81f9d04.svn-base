@@ -1,0 +1,109 @@
+/**
+ * 
+ */
+package com.atyang.librarySystem.Biz.impl;
+
+import static com.atyang.librarySystem.Biz.BaseFinal.LOGIN_FAIL;
+import static com.atyang.librarySystem.Biz.BaseFinal.LOGIN_STU;
+
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.atyang.librarySystem.Biz.StudentBiz;
+import com.atyang.librarySystem.pojo.Book;
+import com.atyang.librarySystem.pojo.RecordId;
+import com.atyang.librarySystem.pojo.ReturnId;
+
+/**
+ * @作者 杨金鹏
+ * @创建时间：2017-6-20
+ * @创建内容：
+ */
+@Service("stuBiz")
+public class StudentBizImpl extends BaseBizImpl implements StudentBiz {
+
+	/**
+	 * 学生使用姓名登录
+	 */
+	@Override
+	public int loginStuByName(String stuName) {
+		if (stuDao.getStuName(stuName) != null) {
+			return LOGIN_STU;
+		}
+		return LOGIN_FAIL;
+	}
+
+	/**
+	 * 学生使用学号登录
+	 */
+	@Override
+	public int loginStuById(Integer stuNo) {
+		if (stuDao.getStuById(stuNo) != null) {
+			return LOGIN_STU;
+		}
+		return LOGIN_FAIL;
+	}
+
+	/**
+	 * 学生申请借书
+	 */
+	@Override
+	public void applyRecord(RecordId recordId) {
+		// 像借阅表插入一条借阅记录
+		recordDao.add(recordId);
+		// 修改Book表中该本书的是否可借状态
+		String state = "借书待审核";
+		bookDao.updateBookState(state, recordId);
+	}
+
+	/**
+	 * 学生申请还书
+	 * 
+	 * @param returnId
+	 */
+	@Override
+	public void applyReturnBook(ReturnId returnId) {
+		// 像还书表插入一条还书记录
+		returnDao.add(returnId);
+		// 修改Book表中该本书的是否可借状态
+		String state = "还书待审核";
+		bookDao.updateBookState(state, returnId);
+	}
+
+	/**
+	 * 查询所有图书
+	 * 
+	 * @return
+	 */
+	@Override
+	public List<Book> getAllBook() {
+		List<Book> books = bookDao.getAll();
+		for (Book b : books) {
+			System.out.println(b);
+		}
+		return books;
+	}
+
+	/**
+	 * 查询学生所借之书
+	 */
+	@Override
+	public List<Book> getStuRecordBooks(Integer stuNo) {
+		List<Book> books = bookDao.getStuBooks(stuNo);
+		for (Book b : books) {
+			System.out.println(b);
+		}
+		return books;
+	}
+
+	/**
+	 * 查询学生所借之书
+	 */
+	@Override
+	public List<Book> getStuRecordBooks() {
+		List<Book> books = bookDao.getStuBooks();
+		return books;
+	}
+
+}

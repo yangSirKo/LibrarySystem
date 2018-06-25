@@ -1,0 +1,31 @@
+/**
+ * 
+ */
+package com.atyang.librarySystem.dao.impl;
+
+import org.springframework.stereotype.Repository;
+
+import com.atyang.librarySystem.dao.StudentDAO;
+import com.atyang.librarySystem.pojo.Student;
+
+/**
+ * @作者 杨金鹏
+ * @创建时间：2017-6-20
+ * @创建内容：
+ */
+@Repository("stuDao")
+public class StudentDAOImpl extends BaseDAOImpl<Student> implements StudentDAO {
+
+	/**
+	 * 根据学生姓名查学生信息
+	 * @param stuName
+	 * @return
+	 */
+	public Student getStuName(String stuName){
+		Student stu = (Student) getSession().createQuery("SELECT * FROM Student WHERE stuName = :stuName ")
+				.setString("stuName", stuName).list();
+		return stu;
+	}
+	
+	
+}

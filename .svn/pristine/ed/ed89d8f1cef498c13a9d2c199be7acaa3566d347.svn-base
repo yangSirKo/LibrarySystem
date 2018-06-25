@@ -1,0 +1,24 @@
+/**
+ * 
+ */
+package com.atyang.librarySystem.dao.impl;
+
+import org.springframework.stereotype.Repository;
+
+import com.atyang.librarySystem.dao.BookDAO;
+import com.atyang.librarySystem.pojo.Book;
+
+/**
+ * @作者 杨金鹏
+ * @创建时间：2017-6-20
+ * @创建内容：
+ */
+@Repository
+public class BookDAOImpl extends BaseDAOImpl<Book> implements BookDAO{
+
+//	public List<Book> getAll(){
+		
+
+	
+	
+}

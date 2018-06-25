@@ -1,0 +1,18 @@
+/**
+ * 
+ */
+package com.atyang.librarySystem.Biz;
+
+/**
+ * @作者 杨金鹏
+ * @创建时间：2017-6-20
+ * @创建内容：
+ */
+public interface StudentBiz {
+
+	//学生登录的方法
+	int loginStu(String stuName);
+	
+	
+		
+}

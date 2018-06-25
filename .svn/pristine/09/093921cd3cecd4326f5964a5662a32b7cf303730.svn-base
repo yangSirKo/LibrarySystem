@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+
+	<constant name="struts.devMode" value="true"></constant>
+	<constant name="struts.action.extension" value="action,,do"></constant>
+	
+	<package name="default" extends="struts-default" namespace="/">
+	
+		<!-- 进行处理学生登录还是管理员登录 -->
+		<action name="*Login"  class="studentAction" >
+			<result>general/{1}Login.jsp</result>
+		</action>
+		
+		<!-- 退出登录 -->
+		<action name="logout" class="logoutAction" >
+			<result>general/login.jsp</result>
+		</action>
+		
+		<!-- 处理学生登录 -->
+		<action name="stuMain" class="studentAction" method="stuLogin">
+			<result>content/student/main.jsp</result>
+			<result name="input">/general/error.jsp </result>
+		</action>
+	
+		<!-- 查询所有书 -->
+		<action name="getAllBooks" class="studentAction" method="getBooks">
+			<result>content/student/main.jsp</result>
+		</action>
+		
+		<!-- 学生申请借书 -->
+		<action name="recordBook" class="studentAction" method="stuApplyRecordBook">
+			<result name="success" type="redirectAction">getAllBooks</result>
+		</action>
+	
+		<!-- 查询学生所借之书 -->
+		<action name="stuRecordSuccess" class="studentAction" method="stuRecordSuccess">
+			<result>content/student/stuRecord.jsp</result>
+		</action>
+		
+		<!-- 还书 -->
+		<action name="returnBook" class="studentAction" method="stuApplyReturnBook">
+			<result name="success" type="redirectAction">getAllBooks</result>
+		</action>
+		
+		<!-- ********************** 管理员业务 ********************************** -->
+		
+		<!-- 处理管理员登录 -->
+		<action name="mgrMain" class="managerAction" method="mgrLogin">
+			<result>content/manager/main.jsp</result>
+			<result name="input">/general/error.jsp </result>
+		</action>
+		
+		<!-- 处理所有待处理申请 -->
+		<action name="stuWaitBooks" class="managerAction" method="getStuWaitBooks">
+			<result>/content/manager/WaitProcess.jsp</result>
+		</action>
+		
+		<!-- 审核申请 -->
+		<action name="Audit" class="managerAction" method="AuditRecordApply">
+			<result type="redirectAction">stuWaitBooks</result>
+		</action>
+		
+
+		
+	</package>
+	
+	
+	
+</struts>    

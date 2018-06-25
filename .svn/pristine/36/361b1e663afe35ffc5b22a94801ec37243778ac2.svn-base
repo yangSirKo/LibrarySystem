@@ -1,0 +1,41 @@
+/**
+ * 
+ */
+package com.atyang.librarySystem.action;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
+
+import com.atyang.librarySystem.Biz.ManagerBiz;
+import com.atyang.librarySystem.Biz.StudentBiz;
+import com.opensymphony.xwork2.ActionSupport;
+
+/**
+ * @作者 杨金鹏
+ * @创建时间：2017-6-21
+ * @创建内容：
+ */
+@Controller
+public class BaseAction extends ActionSupport{
+
+	private static final long serialVersionUID = 5542627615634812268L;
+
+	@Autowired  @Qualifier("mgrBiz")
+	protected ManagerBiz mgrBiz;
+
+	@Autowired  @Qualifier("stuBiz") 
+	protected StudentBiz stuBiz;
+
+	public void setMgrBiz(ManagerBiz mgrBiz) {
+		this.mgrBiz = mgrBiz;
+	}
+
+	public void setStuBiz(StudentBiz stuBiz) {
+		this.stuBiz = stuBiz;
+	}
+	
+	
+	
+	
+}

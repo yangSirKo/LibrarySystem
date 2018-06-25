@@ -1,0 +1,83 @@
+/**
+ * 
+ */
+package com.atyang.librarySystem.dao.impl;
+
+import java.util.List;
+
+import org.springframework.stereotype.Repository;
+
+import com.atyang.librarySystem.dao.BookDAO;
+import com.atyang.librarySystem.pojo.Book;
+import com.atyang.librarySystem.pojo.RecordId;
+import com.atyang.librarySystem.pojo.ReturnId;
+
+/**
+ * @作者 杨金鹏
+ * @创建时间：2017-6-20
+ * @创建内容：
+ * 注意：  @Repository("BookDao")  表现了这是一个 数据访问层， dao名为 BookDao    
+ */
+@Repository("bookDao")    
+@SuppressWarnings("unchecked")
+public class BookDAOImpl extends BaseDAOImpl<Book> implements BookDAO{
+
+	/**
+	 * 查出所有书籍
+	 * @return 所有书的集合
+	 */
+	public List<Book> getAll(){
+		List<Book> books = getSession().createQuery("SELECT * FROM Book").list();
+		return books;
+	}
+	
+	/**
+	 * 按照书名进行模糊查询
+	 * @param bookName
+	 * @return  匹配的书的集合
+	 */
+	public List<Book> get(String bookName){
+		String bookName2 = "_"+bookName+"_";
+		List<Book> books = getSession().createQuery("SELECT * FROM Book WHERE bookName like :bookName ")
+				        	.setString("bookName", bookName2).list();
+		return books;
+	}
+	
+	/**
+	 * 添加图书
+	 * @param book
+	 */
+	public void add(Book book){
+		getSession().save(book);
+	}
+
+	
+	/**
+	 * 修改图书  一般只是修改图书是否可借出的状态
+	 * @param book
+	 */
+	@Override
+	public void updateBookState(String state, Object recordIdOrReturnId) {
+		
+		if(recordIdOrReturnId != null){
+		
+			if(recordIdOrReturnId instanceof RecordId){
+				RecordId recordId = (RecordId) recordIdOrReturnId;
+				int num = recordId.getBook().getBookNo(); 
+				
+				getSession().createQuery("UPDATE Book SET bookState = "+state+" WHERE bookNo = " + num).executeUpdate();
+			
+			}else if(recordIdOrReturnId instanceof ReturnId){
+				ReturnId returnId = (ReturnId) recordIdOrReturnId;
+				getSession().createQuery("UPDATE Book SET BookState = "+state+" WHERE bookNo =:bookNo")
+					.setParameter("bookNo", returnId.getBook().getBookNo()).executeUpdate();
+			}
+		}
+	}
+	
+
+
+	
+	
+	
+}
